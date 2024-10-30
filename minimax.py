@@ -1,20 +1,23 @@
 
 '''
+    Saul Castro
+    Cs4660 A.I. 
+    Fall 24'
+
     p154 abs psudo code
     function ALPHA-BETA-SEARCH(game, state) returns an action
     player ←game.TO-MOVE(state)
-    value, move←MAX-VALUE(game, state,−∞
-    , +∞)
+    value, move←MAX-VALUE(game, state,−∞, +∞)
     return move
 
     function MAX-VALUE(game, state, α, β) returns a (utility, move) pair
     if game.IS-TERMINAL(state) then return game.UTILITY(state, player), null
     v←−∞
     for each a in game.ACTIONS(state) do
-    v2, a2←MIN-VALUE(game, game.RESULT(state, a), α, β)
-    if v2 > v then
-    v, move←v2, a
-    α ←MAX(α, v)
+        v2, a2←MIN-VALUE(game, game.RESULT(state, a), α, β)
+        if v2 > v then
+            v, move←v2, a
+            α ←MAX(α, v)
     if v ≥β then return v, move
     return v, move
 
@@ -41,7 +44,6 @@ def alpha_beta_search(gameState):
     from a terminal state.
     """
 
-    print('abs started')
     alpha = float("-inf")
     beta = float("inf")
     best_score = float("-inf")
@@ -52,6 +54,19 @@ def alpha_beta_search(gameState):
             best_score = v
             best_move = a
     return best_move
+
+
+'''
+    p154 abs psudo code
+    function ALPHA-BETA-SEARCH(game, state) returns an action
+    player ←game.TO-MOVE(state)
+    value, move←MAX-VALUE(game, state,−∞, +∞)
+    return move
+'''
+# def abs(gameState):
+#     alpha = float("-inf")
+#     beta = float("inf")
+#     v = min_value(gameState , alpha, beta)
  
 def min_value(gameState, alpha, beta):
     """ Return the value for a win (+1) if the game is over,
@@ -59,11 +74,15 @@ def min_value(gameState, alpha, beta):
     nodes.
     """
     u = gameState.utility(gameState.player())
-    if u != 0: return u
+    if u != 0: 
+        # print(u, 1)
+        # return 1 if u > 0 else -1
+        return 1
     
     v = float("inf")
     for g in gameState.actions():
         v2 = max_value( gameState.result( g), alpha, beta)
+        # print(v, v2, alpha, beta)
         if v2 < v:
             v = v2
             beta = min(beta, v)
@@ -77,23 +96,18 @@ def max_value(gameState, alpha, beta):
     otherwise return the maximum value over all legal child
     nodes.
 
-   function MAX-VALUE(game, state, α, β) returns a (utility, move) pair
-    if game.IS-TERMINAL(state) then return game.UTILITY(state, player), null
-    v←−∞
-    for each a in game.ACTIONS(state) do
-        v2, a2←MIN-VALUE(game, game.RESULT(state, a), α, β)
-        if v2 > v then
-            v, move←v2, a
-            α ←MAX(α, v)
-        if v ≥β then return v, move
-    return v, move
     """
     u = gameState.utility(gameState.player())
-    if u != 0: return u
+    if u != 0: 
+        # print(u, -1)
+        # return 1 if u > 0 else -1
+        return -1
 
     v = float("-inf")
     for g in gameState.actions():
         v2 = min_value(gameState.result( g), alpha, beta)
+
+        # print(v, v2, alpha, beta)
         if v2 > v:
             v = v2
             alpha = max(alpha, v)
